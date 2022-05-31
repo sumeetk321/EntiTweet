@@ -58,5 +58,7 @@ def construct_graph(search_ent, tweets_list):
     nt.from_nx(G)
     nt.show('templates/graph.html')
     
+#def preprocess(text):
+
 if __name__ == '__main__':
     app.run(debug=True)
