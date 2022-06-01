@@ -4,7 +4,7 @@ EntiTweet is a Flask web app aimed at creating visualizations of Twitter co-ocur
 
 Please visit the app page and try it for yourself!
 
-* App page: [TODO: deploy app]
+* App page: [https://entitweet.herokuapp.com/](https://entitweet.herokuapp.com/)
 
 ## Running the App Locally
 
@@ -20,17 +20,13 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the req
 flask run
 ```
 
-Visit ```127.0.0.1:5000``` on your browser to access the server. Happy network analyzing!
+Most likely you'll have to visit ```127.0.0.1:5000``` on your browser to access the server. Happy network analyzing!
 
 
 
 ## Usage
 
-On the website, simply enter the search query and the number of tweets you'd like to use to create the network. 
-
-[Insert image]
-
-You will be led to a webpage with the interactive rendered graph.
+On the website, simply enter the search query and the number of tweets you'd like to use to create the network. You will be led to a webpage with the interactive rendered graph.
 
 ## Contributing
 I welcome pull requests! 
