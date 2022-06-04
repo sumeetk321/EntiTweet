@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 import tweepy
 import os
 from dotenv import load_dotenv
@@ -7,7 +7,6 @@ from pyvis.network import Network
 import networkx as nx
 import re
 from fuzzywuzzy import fuzz
-from fuzzywuzzy import process
 
 RATIO_CONSTANT = 85
 
@@ -35,8 +34,8 @@ def on_submit():
         search_query = request.form['query']
         max_num = request.form['max_num']
         tweets_list = scrape_tweets(search_query, max_num)
-        construct_graph(search_query, tweets_list)
-        return render_template('graph.html')
+        data_list = construct_graph(search_query, tweets_list)
+        return render_template('graph.html', nodes=data_list[0], edges=data_list[1], heading=data_list[2], height=data_list[3], width=data_list[4], options=data_list[5])
     else:
         return render_template('index.html')
 
@@ -69,7 +68,10 @@ def construct_graph(search_ent, tweets_list):
                 else:
                     G.add_edge(ents[i][0], ents[j][0])
     nt.from_nx(G)
-    nt.show('templates/graph.html')
+    #nt.show('templates/graph.html')
+    nodes, edges, heading, height, width, options = nt.get_network_data()
+    data_list = [nodes, edges, heading, height, width, options]
+    return data_list
     
 #Process tweets; remove retweet "RT" strings, URLs, hashtags, and single numeric digits. 
 def preprocess(tweet):
@@ -82,5 +84,5 @@ def preprocess(tweet):
 
 
 
-#if __name__ == '__main__':
- #   app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
