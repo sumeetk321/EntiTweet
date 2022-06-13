@@ -1,6 +1,6 @@
 # EntiTweet
 
-EntiTweet is a Flask web app aimed at creating visualizations of Twitter co-ocurrence networks with named entities. It works by collecting the most recent tweets related to a user-inputted search query, and using SpaCy to perform Named Entity Recognition (NER) on each tweet. These entities are collected and added as nodes to a graph using the NetworkX package. Edges are then added to the graph; two nodes are connected by an edge if they co-ocurr. The criteria for co-ocurrence is that both entities must be present in the same tweet. The graph is then rendered using the PyVis package. 
+EntiTweet is a Flask web app aimed at creating visualizations of Twitter co-ocurrence networks with named entities. It collects the most recent tweets related to a user-inputted search query, and uses SpaCy to perform Named Entity Recognition (NER) on each tweet. These entities are collected and added as nodes to a graph using the NetworkX package. Edges are then added to the graph; two nodes are connected by an edge if they co-ocurr. The criteria for co-ocurrence is that both entities must be present in the same tweet. The graph is then rendered using the PyVis package. 
 
 Please visit the app page and try it for yourself!
 
@@ -14,7 +14,7 @@ First, clone the repository.
 git clone https://github.com/sumeetk321/EntiTweet.git
 ```
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the required dependencies. These are outlined in ```app.py```. You can run the following command to start the server:
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the required dependencies. These are outlined in ```requirements.txt```. Simply run ```app.py``` or run the following command to start the server:
 
 ```bash
 flask run
