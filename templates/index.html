@@ -1,16 +1,28 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
 
-   <head>
-      <title>EntiTweet!</title>
-   </head>
-	
-   <body>
-    <form action = "/graph" method = "post">
-        <label>Query <input type="text" name = "query"></label>
-        <label>Number <input type="number" name = "max_num"></label>
-        <input type="submit" value="Submit">
-    </form>
-   </body>
-	
+<html>
+	<head>
+		<title>EntiTweet</title>
+		<link rel= "stylesheet" href= "{{ url_for('static',filename='styles.css') }}">
+	</head>
+	<body>
+
+		<header id="header">
+			<h1>EntiTweet</h1>
+			<p>Create visualizations of Twitter co-occurence networks. Enter a search query and the number of tweets you want to use to construct the graph.</p>
+		</header>
+
+		<form action = "/graph" method = "post">
+			<input type="text" name = "query" placeholder = "Search query">
+			<input type="number" name = "max_num" placeholder = "# of Tweets to use">
+			<input type="submit" value="Submit">
+		</form>
+
+		<p> <a href="https://github.com/sumeetk321/EntiTweet">Project repo</a> </p>
+		<footer>
+			<p> Author: Sumeet Kulkarni </p>
+			<p> <a href="https://github.com/sumeetk321">My Github</a></p>
+			<p> <a href ="mailto: sumeetk2@illinois.edu"> Email </a> </p>
+		</footer>
+	</body>
 </html>

@@ -32,6 +32,8 @@ def on_submit():
     G.clear()
     if request.method == "POST":
         search_query = request.form['query']
+        if len(search_query) == 0:
+           return render_template('index.html')
         max_num = request.form['max_num']
         tweets_list = scrape_tweets(search_query, max_num)
         data_list = construct_graph(search_query, tweets_list)
@@ -70,6 +72,7 @@ def construct_graph(search_ent, tweets_list):
     nt.from_nx(G)
     #nt.show('templates/graph.html')
     nodes, edges, heading, height, width, options = nt.get_network_data()
+    
     data_list = [nodes, edges, heading, height, width, options]
     return data_list
     

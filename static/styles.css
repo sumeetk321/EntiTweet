@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+body {
+    background: #87ceeb;
+    font-family: 'Nunito', sans-serif;
+    text-align: center;
+}
+
+h1 {
+    color: white;
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+p {
+    color: white;
+    font-weight: bold;
+    font-size: large;
+}
+
+form {
+    display: inline-block;
+    margin: auto;
+    position: relative;
+}
+form input {
+    color: white;
+    background: #C8A2C8;
+    border-width: 0px;
+    border: none;
+    width: 375px;
+    height: 50px;
+}
+
+form input:focus {
+    color: white;
+}
+form input[value="Submit"] {
+    background: #C8A2C8;
+    color: white;
+}
+::placeholder {
+    color: white;
+    font-family: 'Nunito', sans-serif;
+}
+
+footer {
+    font-family: 'Nunito', sans-serif;
+    color: white;   
+    font-size: small;
+    margin: 380px 0px;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
