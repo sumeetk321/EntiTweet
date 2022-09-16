@@ -9,6 +9,7 @@ import re
 from fuzzywuzzy import fuzz
 
 RATIO_CONSTANT = 85
+NUM_TWEETS_MAX = 100
 
 load_dotenv()
 
@@ -32,10 +33,11 @@ def on_submit():
     G.clear()
     if request.method == "POST":
         search_query = request.form['query']
-        if len(search_query) == 0:
+        num_tweets = request.form['num_tweets']
+        #print(type(num_tweets))
+        if len(search_query) == 0 or int(num_tweets) > NUM_TWEETS_MAX:
            return render_template('index.html')
-        max_num = request.form['max_num']
-        tweets_list = scrape_tweets(search_query, max_num)
+        tweets_list = scrape_tweets(search_query, num_tweets)
         data_list = construct_graph(search_query, tweets_list)
         return render_template('graph.html', nodes=data_list[0], edges=data_list[1], heading=data_list[2], height=data_list[3], width=data_list[4], options=data_list[5])
     else:
