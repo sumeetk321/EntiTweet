@@ -7,6 +7,10 @@ from pyvis.network import Network
 import networkx as nx
 import re
 from fuzzywuzzy import fuzz
+from flair.data import Sentence
+from flair.models import SequenceTagger
+from flair.tokenization import SegtokSentenceSplitter
+
 
 RATIO_CONSTANT = 85
 NUM_TWEETS_MAX = 100
@@ -34,11 +38,11 @@ def on_submit():
     if request.method == "POST":
         search_query = request.form['query']
         num_tweets = request.form['num_tweets']
-        #print(type(num_tweets))
+        flair_or_spacy = request.form['dropdown']
         if len(search_query) == 0 or int(num_tweets) > NUM_TWEETS_MAX:
            return render_template('index.html')
         tweets_list = scrape_tweets(search_query, num_tweets)
-        data_list = construct_graph(search_query, tweets_list)
+        data_list = construct_graph(search_query, tweets_list, flair_or_spacy)
         return render_template('graph.html', nodes=data_list[0], edges=data_list[1], heading=data_list[2], height=data_list[3], width=data_list[4], options=data_list[5])
     else:
         return render_template('index.html')
@@ -54,24 +58,51 @@ def scrape_tweets(search_query, count):
     return tweets_list
 
 #Construct a graph using PyVis. Add edges one at a time using entities found by SpaCy NER. Export the graph to an html file. 
-def construct_graph(search_ent, tweets_list):
+def construct_graph(search_ent, tweets_list, flair_or_spacy):
     nt = Network()
-    for tweet_text in tweets_list:
-        spacy_ner = NER(tweet_text)
-        ents = [(e.text, e.start, e.end, e.label_) for e in spacy_ner.ents]
-        for i in range(len(ents)):
+    if(flair_or_spacy=="spacy"):
+        for tweet_text in tweets_list:
+            spacy_ner = NER(tweet_text)
+            ents = [(e.text, e.start, e.end, e.label_) for e in spacy_ner.ents]
+            for i in range(len(ents)):
 
-            if fuzz.ratio(search_ent, ents[i][0]) > RATIO_CONSTANT:
-                continue
-            else:
-                G.add_edge(search_ent, ents[i][0])
-
-            for j in range(i+1, len(ents)):
-                if fuzz.ratio(search_ent, ents[j][0]) > RATIO_CONSTANT:
+                if fuzz.ratio(search_ent, ents[i][0]) > RATIO_CONSTANT:
                     continue
                 else:
-                    G.add_edge(ents[i][0], ents[j][0])
-    nt.from_nx(G)
+                    G.add_edge(search_ent, ents[i][0])
+
+                for j in range(i+1, len(ents)):
+                    if fuzz.ratio(search_ent, ents[j][0]) > RATIO_CONSTANT:
+                        continue
+                    else:
+                        G.add_edge(ents[i][0], ents[j][0])
+        nt.from_nx(G)
+    else:
+        splitter = SegtokSentenceSplitter()
+        tagger = SequenceTagger.load('ner')
+        for tweet_text in tweets_list:
+
+            sentences = splitter.split(tweet_text)
+            tagger.predict(sentences)
+            for sentence in sentences:
+                spans = sentence.get_spans('ner')
+                for i in range(len(spans)):
+                    entity = spans[i]
+                    # print entity text, start_position and end_position
+                    if fuzz.ratio(search_ent, entity.text) > RATIO_CONSTANT:
+                        continue
+                    else:
+                        G.add_edge(search_ent, entity.text)
+
+                    for j in range(i+1, len(spans)):
+                        if fuzz.ratio(search_ent, spans[j].text) > RATIO_CONSTANT:
+                            continue
+                        else:
+                            G.add_edge(entity.text, spans[j].text)
+        nt.from_nx(G)
+
+
+
     #nt.show('templates/graph.html')
     nodes, edges, heading, height, width, options = nt.get_network_data()
     

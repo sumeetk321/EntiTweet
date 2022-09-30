@@ -9,12 +9,16 @@
 
 		<header id="header">
 			<h1>EntiTweet</h1>
-			<p>Create visualizations of Twitter co-occurence networks. Enter a search query and the number of tweets you want to use to construct the graph.</p>
+			<p>Create visualizations of Twitter co-occurence networks. Enter a search query and the number of tweets you want to use to construct the graph. Choose SpaCy or Flair as your NER Library.</p>
 		</header>
 
 		<form action = "/graph" method = "post">
 			<input type="text" name = "query" placeholder = "Search query">
 			<input type="number" name = "num_tweets" placeholder = "# of Tweets to use (Max: 100)">
+			<select name = "dropdown">
+				<option value = "spacy" selected>SpaCy</option>
+				<option value = "flair">Flair</option>
+			 </select>
 			<input type="submit" value="Submit">
 		</form>
 

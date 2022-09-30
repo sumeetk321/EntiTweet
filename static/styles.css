@@ -28,7 +28,7 @@ form input {
     background: #C8A2C8;
     border-width: 0px;
     border: none;
-    width: 375px;
+    width: 300px;
     height: 50px;
 }
 
@@ -38,6 +38,14 @@ form input:focus {
 form input[value="Submit"] {
     background: #C8A2C8;
     color: white;
+}
+form select {
+    color: white;
+    background: #C8A2C8;
+    border-width: 0px;
+    border: none;
+    width: 375px;
+    height: 50px;
 }
 ::placeholder {
     color: white;
