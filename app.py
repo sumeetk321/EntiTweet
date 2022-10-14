@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, send_file, url_for
 import tweepy
 import os
 from dotenv import load_dotenv
@@ -10,7 +10,9 @@ from fuzzywuzzy import fuzz
 from flair.data import Sentence
 from flair.models import SequenceTagger
 from flair.tokenization import SegtokSentenceSplitter
-
+import matplotlib
+matplotlib.use('Agg')
+import matplotlib.pyplot as plt
 
 RATIO_CONSTANT = 85
 NUM_TWEETS_MAX = 100
@@ -24,6 +26,9 @@ client = tweepy.Client(bearer_token)
 NER = spacy.load("en_core_web_sm")
 
 G = nx.Graph()
+
+splitter = SegtokSentenceSplitter()
+tagger = SequenceTagger.load('ner')
 
 app = Flask(__name__)
 
@@ -43,6 +48,8 @@ def on_submit():
            return render_template('index.html')
         tweets_list = scrape_tweets(search_query, num_tweets)
         data_list = construct_graph(search_query, tweets_list, flair_or_spacy)
+        nx.draw_networkx(G, pos=nx.fruchterman_reingold_layout(G), node_size=50, font_size=5, edge_color='#E84A27', width=0.5, with_labels=True) #Go Illini!
+        plt.savefig('templates/graph.png', dpi=500)
         return render_template('graph.html', nodes=data_list[0], edges=data_list[1], heading=data_list[2], height=data_list[3], width=data_list[4], options=data_list[5])
     else:
         return render_template('index.html')
@@ -78,8 +85,6 @@ def construct_graph(search_ent, tweets_list, flair_or_spacy):
                         G.add_edge(ents[i][0], ents[j][0])
         nt.from_nx(G)
     else:
-        splitter = SegtokSentenceSplitter()
-        tagger = SequenceTagger.load('ner')
         for tweet_text in tweets_list:
 
             sentences = splitter.split(tweet_text)
@@ -101,8 +106,7 @@ def construct_graph(search_ent, tweets_list, flair_or_spacy):
                             G.add_edge(entity.text, spans[j].text)
         nt.from_nx(G)
 
-
-
+    
     #nt.show('templates/graph.html')
     nodes, edges, heading, height, width, options = nt.get_network_data()
     
@@ -117,6 +121,10 @@ def preprocess(tweet):
     processed_tweet = re.sub(r'[0-9]', '', processed_tweet)
     return processed_tweet
 
+@app.route('/download')
+def downloadGraph():
+    path = "templates/graph.png"
+    return send_file(path, as_attachment=True)
 
 
 
