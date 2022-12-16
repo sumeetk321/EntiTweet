@@ -4,7 +4,7 @@ EntiTweet is a Flask web app aimed at creating visualizations of Twitter co-ocur
 
 Please visit the app page and try it for yourself!
 
-* App page: [https://entitweet.herokuapp.com/](https://entitweet.herokuapp.com/)
+* App page: [https://entitweet-app.onrender.com/)
 
 ## Running the App Locally
 
