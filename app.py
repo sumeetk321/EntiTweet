@@ -79,14 +79,14 @@ def construct_spacy_graph(search_ent, tweets_list):
     for tweet_text in tweets_list:
         spacy_ner = NER(tweet_text)
         ents = [(e.text, e.start, e.end, e.label_) for e in spacy_ner.ents]
-        for i, _ in enumerate(ents):
-            if fuzz.ratio(search_ent, ents[i][0]) > RATIO_CONSTANT:
+        for i, ent in enumerate(ents):
+            if fuzz.ratio(search_ent, ent[0]) > RATIO_CONSTANT:
                 continue
-            G.add_edge(search_ent, ents[i][0])
+            G.add_edge(search_ent, ent[0])
             for j in range(i+1, len(ents)):
                 if fuzz.ratio(search_ent, ents[j][0]) > RATIO_CONSTANT:
                     continue
-                G.add_edge(ents[i][0], ents[j][0])
+                G.add_edge(ent[0], ents[j][0])
     network.from_nx(G)
     return get_data_list(network)
 
@@ -98,8 +98,8 @@ def construct_flair_graph(search_ent, tweets_list):
         tagger.predict(sentences)
         for sentence in sentences:
             spans = sentence.get_spans('ner')
-            for i, _ in enumerate(spans):
-                entity = spans[i]
+            for i, span in enumerate(spans):
+                entity = span
                 # print entity text, start_position and end_position
                 if fuzz.ratio(search_ent, entity.text) > RATIO_CONSTANT:
                     continue
