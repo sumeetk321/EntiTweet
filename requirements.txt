@@ -7,3 +7,4 @@ python-dotenv==0.21.0
 pyvis==0.2.1
 spacy==3.3.0
 tweepy==4.10.0
+gunicorn==20.1.0
