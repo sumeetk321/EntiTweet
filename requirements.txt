@@ -13,7 +13,7 @@ ipaddr==2.2.0
 keyring==23.11.0
 lockfile==0.12.2
 lxml==4.9.1
-matplotlib==3.6.0
+matplotlib==3.5.3
 mypy_extensions==0.4.3
 networkx==2.8.6
 numpy==1.23.3
