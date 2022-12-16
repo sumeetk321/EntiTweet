@@ -25,6 +25,6 @@ pyvis==0.3.0
 spacy==3.4.1
 tweepy==4.10.1
 typing_extensions==4.4.0
-wincertstore==0.2.1
+wincertstore==0.2
 xmlrpclib==1.0.1
 zipp==3.8.1
