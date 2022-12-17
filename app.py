@@ -52,8 +52,10 @@ def on_submit():
         nx.draw_networkx(G, pos=nx.fruchterman_reingold_layout(G), node_size=50, font_size=5,
             edge_color='#E84A27', width=0.5, with_labels=True) #Go Illini!
         plt.savefig('templates/graph.png', dpi=500)
+        degrees = [v for (_, v) in G.degree()]
         return render_template('graph.html', nodes=data_list[0], edges=data_list[1],
-            heading=data_list[2], height=data_list[3], width=data_list[4], options=data_list[5])
+            heading=data_list[2], height=data_list[3], width=data_list[4], 
+            options=data_list[5], g_order=G.order(), g_size = G.size(), min_degree=min(degrees), max_degree=max(degrees))
     return render_template('index.html')
 
 def scrape_tweets(search_query, count):
@@ -71,7 +73,6 @@ def construct_graph(search_ent, tweets_list, flair_or_spacy):
     if flair_or_spacy=="spacy":
         return construct_spacy_graph(search_ent, tweets_list)
     return construct_flair_graph(search_ent, tweets_list)
-
 
 def construct_spacy_graph(search_ent, tweets_list):
     """Constructs the graph using Spacy as the main NER library"""
