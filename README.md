@@ -64,6 +64,7 @@ Distributed under the MIT License. See ```LICENSE.txt``` for more information.
 ## Contact
 
 Sumeet Kulkarni - sumeetk2@illinois.edu
+
 Project Link: [https://github.com/sumeetk321/EntiTweet](https://github.com/sumeetk321/EntiTweet)
 
 [contributors-shield]: https://img.shields.io/github/contributors/sumeetk321/EntiTweet.svg?style=for-the-badge
