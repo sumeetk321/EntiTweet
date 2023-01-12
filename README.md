@@ -32,7 +32,7 @@ First, clone the repository.
 git clone https://github.com/sumeetk321/EntiTweet.git
 ```
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the required dependencies. These are outlined in ```requirements.txt```. Simply run ```app.py``` or run the following command to start the server:
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install the required dependencies. These are outlined in ```requirements.txt```. Simply run ```app.py``` or run the following command to start the server, ensuring you have Flask installed:
 
 ```bash
 flask run
