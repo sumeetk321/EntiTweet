@@ -13,7 +13,8 @@
   <p align="center">
     A web app for creating Twitter co-occurence networks using Spacy and Flair
     <br />
-    <a href="https://entitweet-app.onrender.com/"><strong>Try it out!</strong></a>
+    <s><a href="https://entitweet-app.onrender.com/"><strong>Try it out!</strong></a></s>
+    <b> NOTE: Due to changes in the Twitter API, the app is not functioning as intended. I am working to fix this. </b>
     <br />
   </p>
 </div>
